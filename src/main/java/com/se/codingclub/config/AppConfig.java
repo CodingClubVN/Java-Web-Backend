@@ -1,6 +1,5 @@
 package com.se.codingclub.config;
 
-
 import java.beans.PropertyVetoException;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -26,84 +25,79 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan("com.se.codingclub")
-@PropertySource({"classpath:applications.properties"})
+@PropertySource({ "classpath:applications.properties" })
 public class AppConfig implements WebMvcConfigurer {
 	@Autowired
 	private Environment evn;
-	
+
 	private Logger logger = Logger.getLogger(getClass().getName());
-	
+
 	@Bean
 	public DataSource myDataSource() {
-		
+
 		ComboPooledDataSource myDataSource = new ComboPooledDataSource();
-		
+
 		try {
-			myDataSource.setDriverClass(evn.getProperty("jdbc.driverClassName"));
-			
+			myDataSource.setDriverClass(evn.getProperty("jdbc.driver"));
+
 		} catch (PropertyVetoException e) {
 			// TODO: handle exception
 			throw new RuntimeException(e);
 		}
-		
-		logger.info("jdbc.url="+evn.getProperty("jdbc.url"));
-		logger.info("jdbc.user="+evn.getProperty("jdbc.user"));
-		
+
+		logger.info("jdbc.url=" + evn.getProperty("jdbc.url"));
+		logger.info("jdbc.user=" + evn.getProperty("jdbc.user"));
+
 //		set database connection props
-		
+
 		myDataSource.setJdbcUrl(evn.getProperty("jdbc.url"));
 		myDataSource.setUser(evn.getProperty("jdbc.user"));
 		myDataSource.setPassword(evn.getProperty("jdbc.password"));
 //		set connection pool props
-		
+
 		myDataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
 		myDataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
 		myDataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
 		myDataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
-		
+
 		return myDataSource;
-		
+
 	}
-	
+
 	private Properties getHibernateProperties() {
-		
+
 		Properties properties = new Properties();
-		
+
 		properties.setProperty("hibernate.dialect", evn.getProperty("hibernate.dialect"));
 		properties.setProperty("hibernate.show_sql", evn.getProperty("hibernate.show_sql"));
-		
+
 		return properties;
-		
+
 	}
+
 	private int getIntProperty(String propName) {
 		String propVal = evn.getProperty(propName);
 		int intPropVal = Integer.parseInt(propVal);
 		return intPropVal;
 	}
-	
+
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
-		
+
 		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-		
+
 		sessionFactoryBean.setDataSource(myDataSource());
 		sessionFactoryBean.setPackagesToScan(evn.getProperty("hibernate.packagesToScan"));
 		sessionFactoryBean.setHibernateProperties(getHibernateProperties());
 		return sessionFactoryBean;
 	}
-	
-	
-	@Autowired
+
 	@Bean
-	public HibernateTransactionManager transactionManager (SessionFactory sessionFactory) {
+	@Autowired
+	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
 		HibernateTransactionManager txtManager = new HibernateTransactionManager();
 		txtManager.setSessionFactory(sessionFactory);
 		return txtManager;
 	}
-	
-	
-	
-	
-	
-	
+
 }

@@ -22,29 +22,25 @@ public class Brand {
 	private String name;
 	@Column(name = "country")
 	private String country;
-	@Column(name = "img_url")
-	private String imgUrl;
-	@Column(name = "img_id_cloud")
-	private String imgUrlCloud;
+
 	@Column(name = "founder_year")
 	private int founderYear;
 	@Column(name = "description")
 	private String description;
 
-	
 	@OneToMany(mappedBy = "brand")
 	private List<Product> products;
+	
+	@OneToMany(mappedBy = "brand")
+	private List<Image> images;
 	public Brand() {
 	}
 
-	public Brand(int id, String name, String country, String imgUrl, String imgUrlCloud, int founderYear,
-			String description) {
+	public Brand(int id, String name, String country, int founderYear, String description) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.country = country;
-		this.imgUrl = imgUrl;
-		this.imgUrlCloud = imgUrlCloud;
 		this.founderYear = founderYear;
 		this.description = description;
 	}
@@ -71,22 +67,6 @@ public class Brand {
 
 	public void setCountry(String country) {
 		this.country = country;
-	}
-
-	public String getImgUrl() {
-		return imgUrl;
-	}
-
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
-
-	public String getImgUrlCloud() {
-		return imgUrlCloud;
-	}
-
-	public void setImgUrlCloud(String imgUrlCloud) {
-		this.imgUrlCloud = imgUrlCloud;
 	}
 
 	public int getFounderYear() {

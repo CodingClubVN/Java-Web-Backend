@@ -13,18 +13,18 @@ public class Image {
 
 	@Id
 	private int id;
-	@Column(name = "cloudiary_id")
-	private String cloudiaryId;
 
-	@Column(name = "url")
-	private String url;
+	private byte[] file;
 
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
 	@Column(name = "type")
 	private String type;
-
+	
+	@ManyToOne
+	@JoinColumn(name="brand_id")
+	private Brand brand;
 	public Image() {
 		// TODO Auto-generated constructor stub
 	}
@@ -37,20 +37,12 @@ public class Image {
 		this.id = id;
 	}
 
-	public String getCloudiaryId() {
-		return cloudiaryId;
+	public byte[] getFile() {
+		return file;
 	}
 
-	public void setCloudiaryId(String cloudiaryId) {
-		this.cloudiaryId = cloudiaryId;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
+	public void setFile(byte[] file) {
+		this.file = file;
 	}
 
 	public Product getProduct() {
@@ -69,4 +61,13 @@ public class Image {
 		this.type = type;
 	}
 
+	public Brand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
+	
+	
 }

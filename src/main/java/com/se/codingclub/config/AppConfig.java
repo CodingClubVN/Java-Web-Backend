@@ -99,5 +99,4 @@ public class AppConfig implements WebMvcConfigurer {
 		txtManager.setSessionFactory(sessionFactory);
 		return txtManager;
 	}
-
 }

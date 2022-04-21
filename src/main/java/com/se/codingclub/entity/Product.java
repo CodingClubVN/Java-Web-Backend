@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,23 +16,24 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "products")
 public class Product {
-	
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "name")
 	private String name;
 	@Column(name = "price")
 	private double price;
 	@Column(name = "fuel_type")
 	private String fuelType;
-	@Column(name=  "body_type")
+	@Column(name = "body_type")
 	private String bodyType;
 	@Column(name = "created_date")
 	private Date createdDate;
-	@Column(name = "updated_date")
+	@Column(name = "update_date")
 	private Date updatedDate;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
@@ -40,14 +43,15 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "discount_id")
 	private Discount discount;
-	
+
 	@OneToMany(mappedBy = "product")
 	private List<Image> images;
 	@OneToMany(mappedBy = "product")
 	private List<OrderDetail> orderDetails;
-	
+
 	@OneToMany(mappedBy = "product")
 	private List<CartDetail> cartDetails;
+
 	public Product() {
 		// TODO Auto-generated constructor stub
 	}
@@ -131,6 +135,5 @@ public class Product {
 	public void setDiscount(Discount discount) {
 		this.discount = discount;
 	}
-	
-	
+
 }

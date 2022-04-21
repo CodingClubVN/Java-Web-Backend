@@ -59,10 +59,14 @@ public class BrandDAOImpl implements BrandDAO {
 	public Brand updateBrand(int id, Brand brand) {
 		Session session = sessionFactory.getCurrentSession();
 		Brand brandOld = session.find(Brand.class, id);
-		brandOld.setName(brand.getName());
-		brandOld.setFounderYear(brand.getFounderYear());
-		brandOld.setDescription(brand.getDescription());
-		brandOld.setCountry(brand.getCountry());
+		if (brand.getName() != null)
+			brandOld.setName(brand.getName());
+		if (brand.getFounderYear() != 0)
+			brandOld.setFounderYear(brand.getFounderYear());
+		if (brand.getDescription() != null)
+			brandOld.setDescription(brand.getDescription());
+		if (brand.getCountry() != null)
+			brandOld.setCountry(brand.getCountry());
 		session.merge(brandOld);
 		return brandOld;
 	}

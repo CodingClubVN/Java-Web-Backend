@@ -27,6 +27,8 @@ public class User {
 	private String address;
 	@Column(name = "telephone")
 	private String telephone;
+	@Column(name = "role")
+	private String role;
 	@Column(name = "create_date")
 	private Date createdDate;
 	@Column(name = "modified_date")
@@ -52,8 +54,10 @@ public class User {
 		this.address = address;
 		this.telephone = telephone;
 	}
+	
+	
 	public User(String userName, String password, String firstName, String lastName, String address,
-			String telephone, Date createdDate, Date modifiedDate) {
+			String telephone, String role, Date createdDate, Date modifiedDate) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -61,9 +65,18 @@ public class User {
 		this.lastName = lastName;
 		this.address = address;
 		this.telephone = telephone;
+		this.role = role;
 		this.createdDate = createdDate;
 		this.modifiedDate = modifiedDate;
 	}
+
+	public User(int id, String userName, String role) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.role = role;
+	}
+
 	@OneToMany(mappedBy = "user")
 	private List<ShoppingSession> shoppingSessions;
 	
@@ -137,6 +150,14 @@ public class User {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	@Override

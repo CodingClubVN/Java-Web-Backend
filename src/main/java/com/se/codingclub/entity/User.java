@@ -26,7 +26,7 @@ public class User {
 	@Column(name = "address")
 	private String address;
 	@Column(name = "telephone")
-	private int telephone;
+	private String telephone;
 	@Column(name = "create_date")
 	private Date createdDate;
 	@Column(name = "modified_date")
@@ -38,6 +38,32 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public User(String userName, String password) {
+		super();
+		this.userName = userName;
+		this.password = password;
+	}
+	public User(String userName, String password, String firstName, String lastName, String address, String telephone) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.telephone = telephone;
+	}
+	public User(String userName, String password, String firstName, String lastName, String address,
+			String telephone, Date createdDate, Date modifiedDate) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.telephone = telephone;
+		this.createdDate = createdDate;
+		this.modifiedDate = modifiedDate;
+	}
 	@OneToMany(mappedBy = "user")
 	private List<ShoppingSession> shoppingSessions;
 	
@@ -89,11 +115,11 @@ public class User {
 		this.address = address;
 	}
 
-	public int getTelephone() {
+	public String getTelephone() {
 		return telephone;
 	}
 
-	public void setTelephone(int telephone) {
+	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
 
@@ -111,6 +137,13 @@ public class User {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", address=" + address + ", telephone=" + telephone + ", createdDate="
+				+ createdDate + ", modifiedDate=" + modifiedDate + "]";
 	}
 	
 }

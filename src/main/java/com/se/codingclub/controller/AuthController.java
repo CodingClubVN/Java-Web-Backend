@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,8 @@ public class AuthController {
 	private UserService userService;
 	@Autowired
 	private AuthService authService;
+	@Autowired
+	private Auth tokenWrapper;
 	
 	@PostMapping("/login")
 	public Object loginUser(@RequestBody User user) {
@@ -32,7 +35,7 @@ public class AuthController {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("username not exists"));
 		}else {
 			if(authService.matches(user.getPassword(), userCheck.getPassword()) == true) {
-				String token = authService.generateTokenLogin(user.getUserName(),user.getRole(),user.getId());
+				String token = authService.generateTokenLogin(user.getUserName(),userCheck.getRole(),userCheck.getId());
 				return ResponseEntity.status(200).body(new Auth(token,userCheck.getRole()));
 			}else {
 				return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Incorrect password"));
@@ -57,6 +60,12 @@ public class AuthController {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Error!"));
 		}
-	}	
+	}
+	
+	@GetMapping("/test")
+	public User test() {
+		String token = tokenWrapper.getToken();
+		return authService.getUserByToken(token);
+	}
 }
 

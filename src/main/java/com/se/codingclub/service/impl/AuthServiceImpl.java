@@ -6,9 +6,12 @@ import org.springframework.stereotype.Repository;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
+import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.se.codingclub.entity.User;
 import com.se.codingclub.service.AuthService;
 
 
@@ -61,4 +64,36 @@ public class AuthServiceImpl implements AuthService{
 	    sharedSecret = "11111111111111111111111111111111".getBytes();
 	    return sharedSecret;
 	}
+
+	@Override
+	public User getUserByToken(String token) {
+		String username = null;
+		int user_id = -1;
+		String role = null;
+	    try {
+	      JWTClaimsSet claims = getClaimsFromToken(token);
+	      username = claims.getStringClaim("username");
+	      user_id = claims.getIntegerClaim("user_id");
+	      role = claims.getStringClaim("role");
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	    User user = new User(user_id, username, role);
+	    System.out.println(user);
+	    return user;
+	}
+	
+	private JWTClaimsSet getClaimsFromToken(String token) {
+	    JWTClaimsSet claims = null;
+	    try {
+	      SignedJWT signedJWT = SignedJWT.parse(token);
+	      JWSVerifier verifier = new MACVerifier(generateShareSecret());
+	      if (signedJWT.verify(verifier)) {
+	        claims = signedJWT.getJWTClaimsSet();
+	      }
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	    return claims;
+	  }
 }

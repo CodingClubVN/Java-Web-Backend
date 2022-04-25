@@ -1,11 +1,13 @@
 package com.se.codingclub.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.se.codingclub.dao.ProductDAO;
+import com.se.codingclub.entity.Image;
 import com.se.codingclub.entity.Product;
 import com.se.codingclub.service.ProductService;
 
@@ -16,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
 	private ProductDAO productDAO;
 
 	@Override
-	public List<Product> getListProduct() {
+	public Map<Product, List<Image>> getListProduct() {
 
 		return productDAO.getListProduct();
 	}

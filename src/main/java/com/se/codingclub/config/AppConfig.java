@@ -16,6 +16,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -98,5 +100,10 @@ public class AppConfig implements WebMvcConfigurer {
 		HibernateTransactionManager txtManager = new HibernateTransactionManager();
 		txtManager.setSessionFactory(sessionFactory);
 		return txtManager;
+	}
+
+	@Bean
+	public MultipartResolver multipartResolver() {
+		return new CommonsMultipartResolver();
 	}
 }

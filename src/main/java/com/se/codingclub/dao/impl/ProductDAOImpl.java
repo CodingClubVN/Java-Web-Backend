@@ -1,7 +1,9 @@
 package com.se.codingclub.dao.impl;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.se.codingclub.dao.ProductDAO;
+import com.se.codingclub.entity.Image;
 import com.se.codingclub.entity.Product;
 
 @Repository
@@ -20,14 +23,22 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	@Transactional
-	public List<Product> getListProduct() {
-
+	public Map<Product, List<Image>> getListProduct() {
+		Map<Product , List<Image>> result= new HashMap<>();
 		String query = "Select * from products";
+		String queryImage = "Select * from images where product_id = ";
 		Session session = sessionFactory.getCurrentSession();
 		List<Product> products = session.createNativeQuery(query, Product.class).getResultList();
-		return products;
+		for(Product product : products) {
+			List<Image> listImage = session.createNativeQuery(queryImage + product.getId(), Image.class).getResultList();
+			result.put(product, listImage);
+		}
+		return result;
 	}
-
+	
+	
+	
+	
 	@Override
 	@Transactional
 	public Product getProductById(int id) {

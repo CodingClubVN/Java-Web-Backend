@@ -3,6 +3,7 @@ package com.se.codingclub.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,12 +45,12 @@ public class Product {
 	@JoinColumn(name = "discount_id")
 	private Discount discount;
 
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<Image> images;
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
 
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<CartDetail> cartDetails;
 
 	public Product() {

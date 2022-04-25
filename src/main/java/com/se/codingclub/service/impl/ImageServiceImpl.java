@@ -34,13 +34,12 @@ public class ImageServiceImpl implements ImageService {
 
 	@Override
 	public List<Image> getListImageBrandById(int brandId) {
-		// TODO Auto-generated method stub
-		return null;
+		return imageDAO.getListImageBrandById(brandId);
 	}
 
 	@Override
 	public void deleteImage(int id) {
-		// TODO Auto-generated method stub
+		imageDAO.deleteImage(id);
 
 	}
 

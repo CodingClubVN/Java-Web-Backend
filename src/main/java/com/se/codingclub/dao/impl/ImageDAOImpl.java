@@ -31,9 +31,13 @@ public class ImageDAOImpl implements ImageDAO {
 	}
 
 	@Override
+	@Transactional
 	public List<Image> getListImageBrandById(int brandId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessionFactory.getCurrentSession();
+		List<Image> imageBrand = new ArrayList<Image>();
+		String query = "select * from images where brand_id = " + brandId;
+		imageBrand = session.createNativeQuery(query, Image.class).getResultList();
+		return imageBrand;
 	}
 
 	@Override
@@ -45,9 +49,12 @@ public class ImageDAOImpl implements ImageDAO {
 	}
 
 	@Override
+	@Transactional
 	public void deleteImage(int id) {
-		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Image image = session.find(Image.class, id);
 
+		session.delete(image);
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package com.se.codingclub.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,9 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.se.codingclub.dto.BrandDTO;
+import com.se.codingclub.dto.ImageDTO;
 import com.se.codingclub.dto.ResponeMessage;
 import com.se.codingclub.entity.Brand;
+import com.se.codingclub.entity.Image;
 import com.se.codingclub.service.BrandService;
 
 @RestController
@@ -26,9 +32,34 @@ public class BrandController {
 	private BrandService brandService;
 
 	@GetMapping("/list")
-	public List<Brand> getBrands() {
-		return brandService.getListBrand();
+	public ResponseEntity<List<BrandDTO>> getBrands() {
+		Map<Brand, List<Image>> map = brandService.getListBrand();
+		List<BrandDTO> brandDTOs = new ArrayList<BrandDTO>();
+		map.entrySet().forEach(entry -> {
+			Brand brandTemp = entry.getKey();
+			List<Image> images = entry.getValue();
+			BrandDTO brandDTO = new BrandDTO();
 
+			brandDTO.setName(brandTemp.getName());
+			brandDTO.setId(brandTemp.getId());
+			brandDTO.setFounderYear(brandTemp.getFounderYear());
+			brandDTO.setDescription(brandTemp.getDescription());
+			brandDTO.setCountry(brandTemp.getCountry());
+
+			List<ImageDTO> imageDTOs = new ArrayList<ImageDTO>();
+			for (Image image : images) {
+				ImageDTO imageDTO = new ImageDTO();
+				String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/")
+						.path(image.getId() + "").toUriString();
+				imageDTO.setId(image.getId());
+				imageDTO.setUrl(url);
+				imageDTO.setType(image.getType());
+				imageDTOs.add(imageDTO);
+			}
+			brandDTO.setImageDTOs(imageDTOs);
+			brandDTOs.add(brandDTO);
+		});
+		return ResponseEntity.ok().body(brandDTOs);
 	}
 
 	@GetMapping("/{id}")

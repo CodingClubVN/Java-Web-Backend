@@ -26,7 +26,7 @@ import com.se.codingclub.entity.Product;
 import com.se.codingclub.service.ProductService;
 @CrossOrigin
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
 	@Autowired

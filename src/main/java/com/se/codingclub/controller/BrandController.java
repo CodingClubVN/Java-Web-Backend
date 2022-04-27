@@ -26,7 +26,7 @@ import com.se.codingclub.entity.Image;
 import com.se.codingclub.service.BrandService;
 @CrossOrigin
 @RestController
-@RequestMapping("/brands")
+@RequestMapping("/api/brands")
 public class BrandController {
 
 	@Autowired

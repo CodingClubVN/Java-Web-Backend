@@ -25,8 +25,6 @@ public class ShoppingSession {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@Column(name = "total")
-	private int total;
 	@Column(name = "created_date")
 	private Date createdDate;
 	@Column(name = "modified_date")
@@ -53,14 +51,6 @@ public class ShoppingSession {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public int getTotal() {
-		return total;
-	}
-
-	public void setTotal(int total) {
-		this.total = total;
 	}
 
 	public Date getCreatedDate() {

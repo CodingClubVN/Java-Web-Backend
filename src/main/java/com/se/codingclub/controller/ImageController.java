@@ -24,7 +24,7 @@ import com.se.codingclub.entity.Image;
 import com.se.codingclub.service.ImageService;
 @CrossOrigin
 @RestController
-@RequestMapping("/images")
+@RequestMapping("/api/images")
 public class ImageController {
 
 	@Autowired

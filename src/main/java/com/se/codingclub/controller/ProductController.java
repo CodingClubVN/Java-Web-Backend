@@ -18,12 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.google.protobuf.Timestamp;
+import com.se.codingclub.dto.BrandDTO;
+import com.se.codingclub.dto.CategoryDTO;
 import com.se.codingclub.dto.ImageDTO;
 import com.se.codingclub.dto.ProductDTO;
 import com.se.codingclub.dto.ResponeMessage;
 import com.se.codingclub.entity.Image;
 import com.se.codingclub.entity.Product;
 import com.se.codingclub.service.ProductService;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/products")
@@ -39,9 +43,11 @@ public class ProductController {
 //	}
 
 	@GetMapping("/list")
-	public ResponseEntity<List<ProductDTO>> getProducts() {
+	public ResponseEntity<List<ProductDTO>> getProducts() throws InterruptedException {
 		Map<Product, List<Image>> map = productService.getListProduct();
-
+		if (map == null) {
+			map = productService.getListProduct();
+		}
 		List<ProductDTO> productDTOs = new ArrayList<ProductDTO>();
 
 		map.entrySet().forEach(product -> {
@@ -55,6 +61,11 @@ public class ProductController {
 			productDTO.setFuelType(productTemp.getFuelType());
 			productDTO.setCreatedDate(productTemp.getCreatedDate());
 			productDTO.setBodyType(productTemp.getBodyType());
+			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getId(), productTemp.getCategory().getName(),
+					productTemp.getCategory().getDescription()));
+			productDTO.setBrandDTO(new BrandDTO(productTemp.getBrand().getId(), productTemp.getBrand().getName(),
+					productTemp.getBrand().getCountry(), productTemp.getBrand().getFounderYear(),
+					productTemp.getBrand().getDescription()));
 			List<ImageDTO> imageDTOs = new ArrayList<ImageDTO>();
 			for (Image image : images) {
 				ImageDTO imageDTO = new ImageDTO();
@@ -68,7 +79,6 @@ public class ProductController {
 			productDTO.setImageDTOs(imageDTOs);
 			productDTOs.add(productDTO);
 		});
-
 		return ResponseEntity.ok().body(productDTOs);
 	}
 

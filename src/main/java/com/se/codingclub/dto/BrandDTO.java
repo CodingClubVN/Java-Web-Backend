@@ -15,6 +15,16 @@ public class BrandDTO {
 		// TODO Auto-generated constructor stub
 	}
 
+	public BrandDTO(int id, String name, String country, int founderYear, String description) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.country = country;
+		this.founderYear = founderYear;
+		this.description = description;
+
+	}
+
 	public int getId() {
 		return id;
 	}

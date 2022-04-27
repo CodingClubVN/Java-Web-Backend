@@ -13,22 +13,11 @@ public class ProductDTO {
 	private Date createdDate;
 	private Date updatedDate;
 	private List<ImageDTO> imageDTOs;
+	private BrandDTO brandDTO;
+	private CategoryDTO categoryDTO;
 
 	public ProductDTO() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public ProductDTO(int id, String name, double price, String fuelType, String bodyType, Date createdDate,
-			Date updatedDate, List<ImageDTO> imageDTOs) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.price = price;
-		this.fuelType = fuelType;
-		this.bodyType = bodyType;
-		this.createdDate = createdDate;
-		this.updatedDate = updatedDate;
-		this.imageDTOs = imageDTOs;
 	}
 
 	public int getId() {
@@ -95,6 +84,20 @@ public class ProductDTO {
 		this.imageDTOs = imageDTOs;
 	}
 
-	
+	public BrandDTO getBrandDTO() {
+		return brandDTO;
+	}
+
+	public void setBrandDTO(BrandDTO brandDTO) {
+		this.brandDTO = brandDTO;
+	}
+
+	public CategoryDTO getCategoryDTO() {
+		return categoryDTO;
+	}
+
+	public void setCategoryDTO(CategoryDTO categoryDTO) {
+		this.categoryDTO = categoryDTO;
+	}
 
 }

@@ -45,12 +45,12 @@ public class Product {
 	@JoinColumn(name = "discount_id")
 	private Discount discount;
 
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product")
 	private List<Image> images;
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product")
 	private List<OrderDetail> orderDetails;
 
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product")
 	private List<CartDetail> cartDetails;
 
 	public Product() {

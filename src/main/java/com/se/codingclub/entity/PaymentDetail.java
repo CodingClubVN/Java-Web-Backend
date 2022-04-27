@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,8 +15,9 @@ import javax.persistence.Table;
 @Table(name = "payment_detail")
 public class PaymentDetail {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "order_id")
 	private Order order;
@@ -28,7 +31,7 @@ public class PaymentDetail {
 	private Date createdDate;
 	@Column(name = "modified_date")
 	private Date modifiedDate;
-	
+
 	public PaymentDetail() {
 		// TODO Auto-generated constructor stub
 	}
@@ -88,6 +91,5 @@ public class PaymentDetail {
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
-	
-	
+
 }

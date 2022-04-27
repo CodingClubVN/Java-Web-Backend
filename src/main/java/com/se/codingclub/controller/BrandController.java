@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,7 @@ import com.se.codingclub.dto.ResponeMessage;
 import com.se.codingclub.entity.Brand;
 import com.se.codingclub.entity.Image;
 import com.se.codingclub.service.BrandService;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/brands")
 public class BrandController {

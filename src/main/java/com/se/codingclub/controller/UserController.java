@@ -3,6 +3,7 @@ package com.se.codingclub.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import com.se.codingclub.entity.User;
 import com.se.codingclub.service.AuthService;
 import com.se.codingclub.service.UserService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/users")
 public class UserController {

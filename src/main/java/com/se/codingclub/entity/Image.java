@@ -2,6 +2,8 @@ package com.se.codingclub.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,19 +14,22 @@ import javax.persistence.Table;
 public class Image {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
+	@Column(name = "file")
 	private byte[] file;
-
+	@Column(name = "file_type")
+	private String fileType;
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
 	@Column(name = "type")
 	private String type;
-	
+
 	@ManyToOne
-	@JoinColumn(name="brand_id")
+	@JoinColumn(name = "brand_id")
 	private Brand brand;
+
 	public Image() {
 		// TODO Auto-generated constructor stub
 	}
@@ -68,6 +73,13 @@ public class Image {
 	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
-	
-	
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
 }

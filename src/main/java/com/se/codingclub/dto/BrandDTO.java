@@ -1,5 +1,7 @@
 package com.se.codingclub.dto;
 
+import java.util.List;
+
 public class BrandDTO {
 
 	private int id;
@@ -7,6 +9,7 @@ public class BrandDTO {
 	private String country;
 	private int founderYear;
 	private String description;
+	private List<ImageDTO> imageDTOs;
 
 	public BrandDTO() {
 		// TODO Auto-generated constructor stub
@@ -50,6 +53,14 @@ public class BrandDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<ImageDTO> getImageDTOs() {
+		return imageDTOs;
+	}
+
+	public void setImageDTOs(List<ImageDTO> imageDTOs) {
+		this.imageDTOs = imageDTOs;
 	}
 
 }

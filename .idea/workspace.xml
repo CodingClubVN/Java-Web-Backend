@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="55d10c50-8cf3-4b60-a43e-a4effe4d0bac" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/controller/ImageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/controller/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/CategoryDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/ImageDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/ProductDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/ShoppingSessionDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/impl/CategoryDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/impl/ImageDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/impl/ProductDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/impl/ShoppingSessionImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dto/ImageDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dto/ProductDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/service/CategorySevice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/service/ImageService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/service/impl/ImageServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/controller/BrandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/controller/BrandController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/BrandDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/BrandDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/impl/BrandDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dao/impl/BrandDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dto/BrandDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/dto/BrandDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/Discount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/Discount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/Image.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/PaymentDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/PaymentDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/ShoppingSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/entity/ShoppingSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/service/BrandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/service/BrandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/se/codingclub/service/impl/BrandServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/se/codingclub/service/impl/BrandServiceImpl.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="feature/auth" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="28MxNVpKgURRPGfOjqRKdIt5apE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="55d10c50-8cf3-4b60-a43e-a4effe4d0bac" name="Default Changelist" comment="" />
+      <created>1651040216246</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1651040216246</updated>
+      <workItem from="1651040217747" duration="363000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

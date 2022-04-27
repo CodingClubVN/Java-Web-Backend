@@ -19,6 +19,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -104,7 +106,7 @@ public class AppConfig implements WebMvcConfigurer {
 		txtManager.setSessionFactory(sessionFactory);
 		return txtManager;
 	}
-	
+
 	@Override
 	  public void addInterceptors(InterceptorRegistry registry) {
 	    registry.addInterceptor(bearerTokenInterceptor());
@@ -122,4 +124,8 @@ public class AppConfig implements WebMvcConfigurer {
 	  }
 
 
+	@Bean
+	public MultipartResolver multipartResolver() {
+		return new CommonsMultipartResolver();
+	}
 }

@@ -76,6 +76,16 @@ public class User {
 		this.userName = userName;
 		this.role = role;
 	}
+	
+
+	public User(String userName, String password, Date createdDate, Date modifiedDate) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.createdDate = createdDate;
+		this.modifiedDate = modifiedDate;
+	}
+
 
 	@OneToMany(mappedBy = "user")
 	private List<ShoppingSession> shoppingSessions;

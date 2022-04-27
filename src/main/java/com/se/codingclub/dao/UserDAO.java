@@ -11,4 +11,5 @@ public interface UserDAO {
 	public boolean createUser(User user);
 	public User getUserByUsername(String username);
 	public boolean updatePassword(int id,String password);
+	public User updateUser(int id,User user);
 }

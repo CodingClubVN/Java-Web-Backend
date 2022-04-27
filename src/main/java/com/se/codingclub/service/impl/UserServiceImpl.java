@@ -25,4 +25,16 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getUserByUsername(username);
 	}
 
+	@Override
+	public User updateUser(int id, User user) {
+		// TODO Auto-generated method stub
+		return userDAO.updateUser(id, user);
+	}
+
+	@Override
+	public boolean updatePassword(int id, String password) {
+		// TODO Auto-generated method stub
+		return userDAO.updatePassword(id, password);
+	}
+
 }

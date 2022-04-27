@@ -41,8 +41,12 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
+	@Transactional
 	public boolean updatePassword(int id, String password) {
-		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		User user = session.find(User.class, id);
+		user.setPassword(password);
+		session.merge(user);
 		return true;
 	}
 
@@ -61,6 +65,20 @@ public class UserDAOImpl implements UserDAO{
 		}else {
 			return null;
 		}
+	}
+
+	@Override
+	@Transactional
+	public User updateUser(int id,User user) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		User userOld = session.find(User.class, id);
+		userOld.setFirstName(user.getFirstName());
+		userOld.setLastName(user.getLastName());
+		userOld.setTelephone(user.getTelephone());
+		userOld.setAddress(user.getAddress());
+		session.merge(userOld);
+		return userOld;
 	}
 
 }

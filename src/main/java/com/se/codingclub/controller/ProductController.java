@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.google.protobuf.Timestamp;
 import com.se.codingclub.dto.BrandDTO;
 import com.se.codingclub.dto.CategoryDTO;
 import com.se.codingclub.dto.ImageDTO;
@@ -69,7 +68,7 @@ public class ProductController {
 			List<ImageDTO> imageDTOs = new ArrayList<ImageDTO>();
 			for (Image image : images) {
 				ImageDTO imageDTO = new ImageDTO();
-				String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/")
+				String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/images/")
 						.path(image.getId() + "").toUriString();
 				imageDTO.setId(image.getId());
 				imageDTO.setUrl(url);
@@ -105,9 +104,37 @@ public class ProductController {
 	}
 
 	@GetMapping("/{id}")
-	public Product getProductById(@PathVariable String id) {
-		return productService.getProductById(Integer.parseInt(id));
-
+	public ProductDTO getProductById(@PathVariable String id) {
+		ProductDTO productDTO = new ProductDTO();
+		Map<Product, List<Image>> map = productService.getProductById(Integer.parseInt(id));
+		map.entrySet().forEach(entry -> {
+			Product productTemp = entry.getKey();
+			List<Image> images = entry.getValue();
+			productDTO.setUpdatedDate(productTemp.getUpdatedDate());
+			productDTO.setPrice(productTemp.getPrice());
+			productDTO.setName(productTemp.getName());
+			productDTO.setId(productTemp.getId());
+			productDTO.setFuelType(productTemp.getFuelType());
+			productDTO.setCreatedDate(productTemp.getCreatedDate());
+			productDTO.setBodyType(productTemp.getBodyType());
+			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getId(), productTemp.getCategory().getName(),
+					productTemp.getCategory().getDescription()));
+			productDTO.setBrandDTO(new BrandDTO(productTemp.getBrand().getId(), productTemp.getBrand().getName(),
+					productTemp.getBrand().getCountry(), productTemp.getBrand().getFounderYear(),
+					productTemp.getBrand().getDescription()));
+			List<ImageDTO> imageDTOs = new ArrayList<ImageDTO>();
+			for (Image image : images) {
+				ImageDTO imageDTO = new ImageDTO();
+				String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/images/")
+						.path(image.getId() + "").toUriString();
+				imageDTO.setId(image.getId());
+				imageDTO.setUrl(url);
+				imageDTO.setType(image.getType());
+				imageDTOs.add(imageDTO);
+			}
+			productDTO.setImageDTOs(imageDTOs);
+		});
+		return productDTO;
 	}
 
 }

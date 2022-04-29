@@ -59,7 +59,7 @@ public class ImageServiceImpl implements ImageService {
 			else
 				image.setBrand(null);
 			if (!productId.equals(""))
-				image.setProduct(productDAO.getProductById(Integer.parseInt(productId)));
+				image.setProduct(productDAO.getById(Integer.parseInt(productId)));
 			else
 				image.setProduct(null);
 			image.setFile(file.getBytes());

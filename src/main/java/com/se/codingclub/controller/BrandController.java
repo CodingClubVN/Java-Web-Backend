@@ -24,6 +24,8 @@ import com.se.codingclub.dto.ResponeMessage;
 import com.se.codingclub.entity.Brand;
 import com.se.codingclub.entity.Image;
 import com.se.codingclub.service.BrandService;
+import com.se.codingclub.service.ImageService;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/brands")
@@ -31,6 +33,8 @@ public class BrandController {
 
 	@Autowired
 	private BrandService brandService;
+	@Autowired
+	private ImageService imageService;
 
 	@GetMapping("/list")
 	public ResponseEntity<List<BrandDTO>> getBrands() {
@@ -50,7 +54,7 @@ public class BrandController {
 			List<ImageDTO> imageDTOs = new ArrayList<ImageDTO>();
 			for (Image image : images) {
 				ImageDTO imageDTO = new ImageDTO();
-				String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/")
+				String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api0/images/")
 						.path(image.getId() + "").toUriString();
 				imageDTO.setId(image.getId());
 				imageDTO.setUrl(url);
@@ -64,8 +68,28 @@ public class BrandController {
 	}
 
 	@GetMapping("/{id}")
-	public Brand getBrand(@PathVariable String id) {
-		return brandService.getBrandById(Integer.parseInt(id));
+	public BrandDTO getBrand(@PathVariable String id) {
+		Brand brand = brandService.getBrandById(Integer.parseInt(id));
+		List<Image> images = imageService.getListImageBrandById(Integer.parseInt(id));
+		List<ImageDTO> imageDTOs = new ArrayList<ImageDTO>();
+		BrandDTO brandDTO = new BrandDTO();
+		brandDTO.setName(brand.getName());
+		for (Image image : images) {
+			ImageDTO imageDTO = new ImageDTO();
+			String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/images/").path(image.getId() + "")
+					.toUriString();
+			imageDTO.setId(image.getId());
+			imageDTO.setUrl(url);
+			imageDTO.setType(image.getType());
+			imageDTOs.add(imageDTO);
+		}
+		brandDTO.setImageDTOs(imageDTOs);
+		brandDTO.setId(brand.getId());
+		brandDTO.setFounderYear(brand.getFounderYear());
+		brandDTO.setDescription(brand.getDescription());
+		brandDTO.setCountry(brand.getCountry());
+
+		return brandDTO;
 	}
 
 	@PostMapping("/new")

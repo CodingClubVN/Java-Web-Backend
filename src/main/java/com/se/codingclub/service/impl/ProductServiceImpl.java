@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product getProductById(int id) {
+	public Map<Product, List<Image>> getProductById(int id) {
 		// TODO Auto-generated method stub
 		return productDAO.getProductById(id);
 	}
@@ -44,6 +44,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product updateProdcut(int id, Product product) {
 		return productDAO.updateProdcut(id, product);
+	}
+
+	@Override
+	public Product getById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

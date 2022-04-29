@@ -1,8 +1,8 @@
-package com.se.codingclub.dao;
+package com.se.codingclub.service;
 
 import com.se.codingclub.entity.ShoppingSession;
 
-public interface ShoppingSessionDAO {
+public interface ShoppingSessionService {
 
 	public ShoppingSession saveShoppingSession(ShoppingSession shoppingSession);
 

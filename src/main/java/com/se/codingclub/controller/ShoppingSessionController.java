@@ -33,7 +33,7 @@ public class ShoppingSessionController {
 		shoppingSessionDTO.setId(cart.getId());
 		shoppingSessionDTO.setCreatedDate(cart.getCreatedDate());
 		shoppingSessionDTO.setModifiedDate(cart.getModifiedDate());
-		shoppingSessionDTO.setUser(cart.getUser());
+//		shoppingSessionDTO.setUser(cart.getUser());
 		return shoppingSessionDTO;
 	}
 
@@ -57,7 +57,7 @@ public class ShoppingSessionController {
 		shoppingSessionDTO.setId(cart.getId());
 		shoppingSessionDTO.setCreatedDate(cart.getCreatedDate());
 		shoppingSessionDTO.setModifiedDate(cart.getModifiedDate());
-		shoppingSessionDTO.setUser(cart.getUser());
+//		shoppingSessionDTO.setUser(cart.getUser());
 		return shoppingSessionDTO;
 	}
 

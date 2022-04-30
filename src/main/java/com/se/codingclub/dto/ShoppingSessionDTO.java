@@ -2,12 +2,9 @@ package com.se.codingclub.dto;
 
 import java.util.Date;
 
-import com.se.codingclub.entity.User;
-
 public class ShoppingSessionDTO {
 
 	private int id;
-	private User user;
 	private Date createdDate;
 	private Date modifiedDate;
 
@@ -17,14 +14,6 @@ public class ShoppingSessionDTO {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public Date getCreatedDate() {

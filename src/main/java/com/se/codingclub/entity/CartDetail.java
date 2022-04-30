@@ -4,23 +4,25 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "cart_detail")
-@IdClass(CartDetailPK.class)
 public class CartDetail {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
 
-	@Id
 	@ManyToOne
 	@JoinColumn(name = "session_id")
 	private ShoppingSession shoppingSession;
@@ -75,6 +77,10 @@ public class CartDetail {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 }

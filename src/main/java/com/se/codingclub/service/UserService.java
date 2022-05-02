@@ -8,4 +8,5 @@ public interface UserService {
 	public User getUserByUsername(String username);
 	public User updateUser(int id, User user);
 	public boolean updatePassword(int id, String password);
+	public User getUserById(int id);
 }

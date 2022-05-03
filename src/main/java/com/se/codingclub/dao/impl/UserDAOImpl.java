@@ -42,7 +42,6 @@ public class UserDAOImpl implements UserDAO{
 		session.persist(user);
 		return true;
 	}
-
 	@Override
 	@Transactional
 	public boolean updatePassword(int id, String password) {

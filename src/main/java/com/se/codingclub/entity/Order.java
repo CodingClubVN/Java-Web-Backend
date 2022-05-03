@@ -26,6 +26,10 @@ public class Order {
 	private User user;
 	@Column(name = "total")
 	private double total;
+	@Column(name = "status")
+	private String status;
+	@Column(name = "address")
+	private String address;
 	@Column(name = "create_date")
 	private Date createDate;
 	@Column(name = "modified_date")
@@ -81,4 +85,35 @@ public class Order {
 		this.modifiedDate = modifiedDate;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public List<PaymentDetail> getPaymentDetails() {
+		return paymentDetails;
+	}
+
+	public void setPaymentDetails(List<PaymentDetail> paymentDetails) {
+		this.paymentDetails = paymentDetails;
+	}
+
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
 }

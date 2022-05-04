@@ -37,4 +37,11 @@ public class UserServiceImpl implements UserService{
 		return userDAO.updatePassword(id, password);
 	}
 
+	@Override
+	public User getUserById(int id) {
+		// TODO Auto-generated method stub
+		return userDAO.getUserById(id);
+	}
+	
+
 }

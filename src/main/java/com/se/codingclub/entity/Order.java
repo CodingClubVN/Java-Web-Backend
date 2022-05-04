@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +27,10 @@ public class Order {
 	private User user;
 	@Column(name = "total")
 	private double total;
+	@Column(name = "status")
+	private String status;
+	@Column(name = "address")
+	private String address;
 	@Column(name = "create_date")
 	private Date createDate;
 	@Column(name = "modified_date")
@@ -40,6 +45,18 @@ public class Order {
 	public Order() {
 		// TODO Auto-generated constructor stub
 	}
+
+	
+	public Order(User user, double total, String status, String address, Date createDate, Date modifiedDate) {
+		super();
+		this.user = user;
+		this.total = total;
+		this.status = status;
+		this.address = address;
+		this.createDate = createDate;
+		this.modifiedDate = modifiedDate;
+	}
+
 
 	public int getId() {
 		return id;
@@ -81,4 +98,19 @@ public class Order {
 		this.modifiedDate = modifiedDate;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 }

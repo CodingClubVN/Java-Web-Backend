@@ -25,9 +25,13 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
+	@Transactional
 	public User getUserById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		User user = new User();
+		Session session = sessionFactory.getCurrentSession();
+		user = session.find(User.class, id);
+		return user;
 	}
 
 	@Override
@@ -38,7 +42,6 @@ public class UserDAOImpl implements UserDAO{
 		session.persist(user);
 		return true;
 	}
-
 	@Override
 	@Transactional
 	public boolean updatePassword(int id, String password) {

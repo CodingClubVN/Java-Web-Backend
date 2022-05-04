@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,17 @@ public class UserController {
 			User user = authService.getUserByToken(token);
 			User userOld = userService.updateUser(user.getId(), user_req);
 			return ResponseEntity.status(200).body(userOld);
+		}
+	}
+	@GetMapping("/me")
+	public Object getUserById() {
+		String token = tokenWrapper.getToken();
+		if(token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Please login to continue!"));
+		}else {
+			User user = authService.getUserByToken(token);
+			User user_res = userService.getUserById(user.getId());
+			return ResponseEntity.status(200).body(user_res);
 		}
 	}
 }

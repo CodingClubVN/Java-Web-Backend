@@ -1,5 +1,7 @@
 package com.se.codingclub.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,18 @@ public class OrderServiceImpl implements OrderService{
 	public Order getOrderById(int order_id) {
 		// TODO Auto-generated method stub
 		return orderDAO.getOrderById(order_id);
+	}
+
+	@Override
+	public List<Order> getOrders() {
+		// TODO Auto-generated method stub
+		return orderDAO.getOrders();
+	}
+
+	@Override
+	public List<Order> getOrdersByUserId(int user_id) {
+		// TODO Auto-generated method stub
+		return orderDAO.getOrderOfUser(user_id);
 	}
 
 }

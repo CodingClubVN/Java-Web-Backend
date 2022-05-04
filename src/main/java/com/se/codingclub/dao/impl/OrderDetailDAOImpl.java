@@ -1,6 +1,7 @@
 package com.se.codingclub.dao.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -27,6 +28,16 @@ public class OrderDetailDAOImpl implements OrderDetailDAO{
 		Session session = sessionFactory.getCurrentSession();
 		session.persist(orderDetail);
 		return orderDetail;
+	}
+
+	@Override
+	@Transactional
+	public List<OrderDetail> getOrderDetailByOrderId(int order_id) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		String sql = "select * from order_detail where order_id = " + order_id;
+		List<OrderDetail> orderDetails = session.createNativeQuery(sql, OrderDetail.class).getResultList();
+		return orderDetails;
 	}
 
 }

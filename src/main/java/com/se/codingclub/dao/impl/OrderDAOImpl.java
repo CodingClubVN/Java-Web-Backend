@@ -42,15 +42,23 @@ public class OrderDAOImpl implements OrderDAO{
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getOrders() {
 		// TODO Auto-generated method stub
-		return null;
+		Session session = sessionFactory.getCurrentSession();
+		String sql = "select * from orders";
+		List<Order> list = session.createNativeQuery(sql, Order.class).getResultList();
+		return list;
 	}
 
 	@Override
+	@Transactional
 	public List<Order> getOrderOfUser(int user_id) {
 		// TODO Auto-generated method stub
-		return null;
+		Session session = sessionFactory.getCurrentSession();
+		String sql = "select * from orders where user_id = " + user_id;
+		List<Order> list = session.createNativeQuery(sql, Order.class).getResultList();
+		return list;
 	}
 
 	@Override

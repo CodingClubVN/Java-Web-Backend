@@ -39,12 +39,24 @@ public class Order {
 	@OneToMany(mappedBy = "order")
 	private List<PaymentDetail> paymentDetails;
 
-	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> orderDetails;
 
 	public Order() {
 		// TODO Auto-generated constructor stub
 	}
+
+	
+	public Order(User user, double total, String status, String address, Date createDate, Date modifiedDate) {
+		super();
+		this.user = user;
+		this.total = total;
+		this.status = status;
+		this.address = address;
+		this.createDate = createDate;
+		this.modifiedDate = modifiedDate;
+	}
+
 
 	public int getId() {
 		return id;
@@ -101,14 +113,4 @@ public class Order {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-
-	public List<OrderDetail> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
-	}
-
 }

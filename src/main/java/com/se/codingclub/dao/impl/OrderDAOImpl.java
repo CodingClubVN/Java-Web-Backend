@@ -54,9 +54,12 @@ public class OrderDAOImpl implements OrderDAO{
 	}
 
 	@Override
+	@Transactional
 	public Order getOrderById(int order_id) {
 		// TODO Auto-generated method stub
-		return null;
+		Session session = sessionFactory.getCurrentSession();
+		Order order = session.find(Order.class, order_id);
+		return order;
 	}
 
 }

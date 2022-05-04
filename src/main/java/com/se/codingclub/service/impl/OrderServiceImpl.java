@@ -25,4 +25,10 @@ public class OrderServiceImpl implements OrderService{
 		return orderDAO.updateStatusOrder(id, status);
 	}
 
+	@Override
+	public Order getOrderById(int order_id) {
+		// TODO Auto-generated method stub
+		return orderDAO.getOrderById(order_id);
+	}
+
 }

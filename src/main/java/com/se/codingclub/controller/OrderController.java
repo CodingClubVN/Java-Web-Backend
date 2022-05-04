@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,6 +58,24 @@ public class OrderController {
 			}
 			return ResponseEntity.status(200).body(new ResponeMessage("create order success!"));
 		}
+	}
+	
+	@PutMapping("/{id}")
+	public Object updateStatusOrder(@PathVariable String id, @RequestBody Order order) {
+		System.out.println(id);
+		System.out.println(order.getStatus());
+		String token = tokenAuth.getToken();
+		if(token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Please login to continue!"));
+		}else {
+			Order orderNew = orderService.updateStatusOrder(Integer.parseInt(id), order.getStatus());
+			return ResponseEntity.status(200).body(orderNew);
+		}
+	}
+	
+	@GetMapping("/{id}")
+	public Object getOrderById(@PathVariable String id) {
+		return orderService.getOrderById(Integer.parseInt(id));
 	}
 
 }

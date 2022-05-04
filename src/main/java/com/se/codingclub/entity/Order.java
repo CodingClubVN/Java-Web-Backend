@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class Order {
 	@OneToMany(mappedBy = "order")
 	private List<PaymentDetail> paymentDetails;
 
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
 	private List<OrderDetail> orderDetails;
 
 	public Order() {
@@ -101,13 +102,6 @@ public class Order {
 		this.address = address;
 	}
 
-	public List<PaymentDetail> getPaymentDetails() {
-		return paymentDetails;
-	}
-
-	public void setPaymentDetails(List<PaymentDetail> paymentDetails) {
-		this.paymentDetails = paymentDetails;
-	}
 
 	public List<OrderDetail> getOrderDetails() {
 		return orderDetails;
@@ -116,4 +110,5 @@ public class Order {
 	public void setOrderDetails(List<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
+
 }

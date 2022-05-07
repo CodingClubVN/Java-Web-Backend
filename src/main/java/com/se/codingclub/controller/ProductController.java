@@ -76,7 +76,7 @@ public class ProductController {
 			productDTO.setFuelType(productTemp.getFuelType());
 			productDTO.setCreatedDate(productTemp.getCreatedDate());
 			productDTO.setBodyType(productTemp.getBodyType());
-			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getId(), productTemp.getCategory().getName(),
+			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getCategory().getId(), productTemp.getCategory().getName(),
 					productTemp.getCategory().getDescription()));
 			productDTO.setBrandDTO(new BrandDTO(productTemp.getBrand().getId(), productTemp.getBrand().getName(),
 					productTemp.getBrand().getCountry(), productTemp.getBrand().getFounderYear(),
@@ -160,7 +160,7 @@ public class ProductController {
 			productDTO.setFuelType(productTemp.getFuelType());
 			productDTO.setCreatedDate(productTemp.getCreatedDate());
 			productDTO.setBodyType(productTemp.getBodyType());
-			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getId(), productTemp.getCategory().getName(),
+			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getCategory().getId(), productTemp.getCategory().getName(),
 					productTemp.getCategory().getDescription()));
 			Brand brand = baBrandService.getBrandById(productTemp.getBrand().getId());
 			List<Image> image_brand = imageService.getListImageBrandById(productTemp.getBrand().getId());
@@ -214,7 +214,7 @@ public class ProductController {
 			productDTO.setFuelType(productTemp.getFuelType());
 			productDTO.setCreatedDate(productTemp.getCreatedDate());
 			productDTO.setBodyType(productTemp.getBodyType());
-			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getId(), productTemp.getCategory().getName(),
+			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getCategory().getId(), productTemp.getCategory().getName(),
 					productTemp.getCategory().getDescription()));
 			productDTO.setBrandDTO(new BrandDTO(productTemp.getBrand().getId(), productTemp.getBrand().getName(),
 					productTemp.getBrand().getCountry(), productTemp.getBrand().getFounderYear(),
@@ -249,7 +249,7 @@ public class ProductController {
 			productDTO.setFuelType(productTemp.getFuelType());
 			productDTO.setCreatedDate(productTemp.getCreatedDate());
 			productDTO.setBodyType(productTemp.getBodyType());
-			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getId(), productTemp.getCategory().getName(),
+			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getCategory().getId(), productTemp.getCategory().getName(),
 					productTemp.getCategory().getDescription()));
 			productDTO.setBrandDTO(new BrandDTO(productTemp.getBrand().getId(), productTemp.getBrand().getName(),
 					productTemp.getBrand().getCountry(), productTemp.getBrand().getFounderYear(),

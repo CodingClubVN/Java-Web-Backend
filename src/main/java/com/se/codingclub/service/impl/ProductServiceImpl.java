@@ -58,4 +58,10 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.getListProductByBrand(brand_id);
 	}
 
+	@Override
+	public Map<Product, List<Image>> getListproductByCategory(int category_id) {
+		// TODO Auto-generated method stub
+		return productDAO.getListProductByCategory(category_id);
+	}
+
 }

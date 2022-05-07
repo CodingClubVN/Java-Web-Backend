@@ -115,4 +115,21 @@ public class ProductDAOImpl implements ProductDAO {
 		return result;
 	}
 
+	@Override
+	@Transactional
+	public Map<Product, List<Image>> getListProductByCategory(int category_id) {
+		// TODO Auto-generated method stub
+		Map<Product, List<Image>> result = new HashMap<>();
+		String query = "Select * from products where category_id = "+ category_id;
+		String queryImage = "Select * from images where product_id = ";
+		Session session = sessionFactory.getCurrentSession();
+		List<Product> products = session.createNativeQuery(query, Product.class).getResultList();
+		for (Product product : products) {
+			List<Image> listImage = session.createNativeQuery(queryImage + product.getId(), Image.class)
+					.getResultList();
+			result.put(product, listImage);
+		}
+		return result;
+	}
+
 }

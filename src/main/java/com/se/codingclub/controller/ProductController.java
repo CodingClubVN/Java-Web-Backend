@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.se.codingclub.dto.Auth;
 import com.se.codingclub.dto.BrandDTO;
 import com.se.codingclub.dto.CategoryDTO;
 import com.se.codingclub.dto.ImageDTO;
@@ -28,6 +29,8 @@ import com.se.codingclub.dto.ResponeMessage;
 import com.se.codingclub.entity.Brand;
 import com.se.codingclub.entity.Image;
 import com.se.codingclub.entity.Product;
+import com.se.codingclub.entity.User;
+import com.se.codingclub.service.AuthService;
 import com.se.codingclub.service.BrandService;
 import com.se.codingclub.service.ImageService;
 import com.se.codingclub.service.ProductService;
@@ -43,6 +46,10 @@ public class ProductController {
 	private BrandService baBrandService;
 	@Autowired
 	private ImageService imageService;
+	@Autowired
+	private Auth tokenWarp;
+	@Autowired
+	private AuthService authService;
 
 //	@GetMapping("/list")
 //	public List<Product> getProducts() {
@@ -91,12 +98,30 @@ public class ProductController {
 	}
 
 	@PostMapping("/new")
-	public Product saveProduct(@RequestBody Product product) {
+	public Object saveProduct(@RequestBody Product product) {
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
+		User user = authService.getUserByToken(token);
+		if(user.getRole().equals("admin") == false) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Account does not have permission to perform this function!"));
+		}
 		return productService.saveProdcut(product);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ResponeMessage> deleteProduct(@PathVariable String id) {
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
+		User user = authService.getUserByToken(token);
+		if(user.getRole().equals("admin") == false) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Account does not have permission to perform this function!"));
+		}
 		try {
 
 			productService.deleteProduct(Integer.parseInt(id));
@@ -108,7 +133,16 @@ public class ProductController {
 	}
 
 	@PutMapping("/{id}")
-	public Product updateProduct(@RequestBody Product product, @PathVariable String id) {
+	public Object updateProduct(@RequestBody Product product, @PathVariable String id) {
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
+		User user = authService.getUserByToken(token);
+		if(user.getRole().equals("admin") == false) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Account does not have permission to perform this function!"));
+		}
 		return productService.updateProdcut(Integer.parseInt(id), product);
 	}
 

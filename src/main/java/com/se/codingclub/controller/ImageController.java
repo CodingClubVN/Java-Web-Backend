@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.se.codingclub.dto.Auth;
 import com.se.codingclub.dto.ImageDTO;
 import com.se.codingclub.dto.ResponeMessage;
 import com.se.codingclub.entity.Image;
+import com.se.codingclub.entity.User;
+import com.se.codingclub.service.AuthService;
 import com.se.codingclub.service.ImageService;
 @CrossOrigin
 @RestController
@@ -29,6 +32,10 @@ public class ImageController {
 
 	@Autowired
 	private ImageService imageService;
+	@Autowired
+	private Auth tokenWarp;
+	@Autowired
+	private AuthService authService;
 
 	@GetMapping("/product")
 	public List<Image> getImageProduct(@RequestParam int productId) {
@@ -64,14 +71,32 @@ public class ImageController {
 	}
 
 	@PostMapping("/new")
-	public ImageDTO saveImage(@RequestParam("file") MultipartFile file, @RequestParam("productId") String productId,
+	public Object saveImage(@RequestParam("file") MultipartFile file, @RequestParam("productId") String productId,
 			@RequestParam("brandId") String brandId, @RequestParam("type") String type) throws IOException {
 
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
+		User user = authService.getUserByToken(token);
+		if(user.getRole().equals("admin") == false) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Account does not have permission to perform this function!"));
+		}
 		return imageService.saveImage(productId, brandId, type, file);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ResponeMessage> deleteImage(@PathVariable String id) {
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
+		User user = authService.getUserByToken(token);
+		if(user.getRole().equals("admin") == false) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Account does not have permission to perform this function!"));
+		}
 		try {
 			imageService.deleteImage(Integer.parseInt(id));
 			return ResponseEntity.ok().body(new ResponeMessage("Delete Success"));

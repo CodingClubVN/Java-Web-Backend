@@ -1,5 +1,9 @@
 package com.se.codingclub.service;
 
-public interface CategorySevice {
+import java.util.List;
 
+import com.se.codingclub.entity.Category;
+
+public interface CategorySevice {
+	public List<Category> getCategories();
 }

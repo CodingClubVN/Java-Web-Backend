@@ -26,17 +26,16 @@ public class ShoppingSessionController {
 	@Autowired
 	private ShoppingSessionService shoppingSessionService;
 
-	@PostMapping("/new")
-	public ShoppingSessionDTO saveShoppingSession(@RequestBody ShoppingSession shoppingSession) {
-		ShoppingSession cart = shoppingSessionService.saveShoppingSession(shoppingSession);
-		ShoppingSessionDTO shoppingSessionDTO = new ShoppingSessionDTO();
-		shoppingSessionDTO.setId(cart.getId());
-		shoppingSessionDTO.setCreatedDate(cart.getCreatedDate());
-		shoppingSessionDTO.setModifiedDate(cart.getModifiedDate());
-//		shoppingSessionDTO.setUser(cart.getUser());
-		return shoppingSessionDTO;
-	}
-
+//	@PostMapping("/new")
+//	public ShoppingSessionDTO saveShoppingSession(@RequestBody ShoppingSession shoppingSession) {
+//		ShoppingSession cart = shoppingSessionService.saveShoppingSession(shoppingSession);
+//		ShoppingSessionDTO shoppingSessionDTO = new ShoppingSessionDTO();
+//		shoppingSessionDTO.setId(cart.getId());
+//		shoppingSessionDTO.setCreatedDate(cart.getCreatedDate());
+//		shoppingSessionDTO.setModifiedDate(cart.getModifiedDate());
+////		shoppingSessionDTO.setUser(cart.getUser());
+//		return shoppingSessionDTO;
+//	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ResponeMessage> deleteShoppingSession(@PathVariable("id") String id) {
 		try {

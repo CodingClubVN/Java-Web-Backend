@@ -1,9 +1,11 @@
 package com.se.codingclub.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.dom4j.Branch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,11 @@ import com.se.codingclub.dto.CategoryDTO;
 import com.se.codingclub.dto.ImageDTO;
 import com.se.codingclub.dto.ProductDTO;
 import com.se.codingclub.dto.ResponeMessage;
+import com.se.codingclub.entity.Brand;
 import com.se.codingclub.entity.Image;
 import com.se.codingclub.entity.Product;
+import com.se.codingclub.service.BrandService;
+import com.se.codingclub.service.ImageService;
 import com.se.codingclub.service.ProductService;
 
 @CrossOrigin
@@ -34,6 +39,10 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private BrandService baBrandService;
+	@Autowired
+	private ImageService imageService;
 
 //	@GetMapping("/list")
 //	public List<Product> getProducts() {
@@ -119,9 +128,27 @@ public class ProductController {
 			productDTO.setBodyType(productTemp.getBodyType());
 			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getId(), productTemp.getCategory().getName(),
 					productTemp.getCategory().getDescription()));
-			productDTO.setBrandDTO(new BrandDTO(productTemp.getBrand().getId(), productTemp.getBrand().getName(),
-					productTemp.getBrand().getCountry(), productTemp.getBrand().getFounderYear(),
-					productTemp.getBrand().getDescription()));
+			Brand brand = baBrandService.getBrandById(productTemp.getBrand().getId());
+			List<Image> image_brand = imageService.getListImageBrandById(productTemp.getBrand().getId());
+			BrandDTO brandDTO = new BrandDTO();
+			List<ImageDTO> imageDTOs_brand = new ArrayList<ImageDTO>();
+			brandDTO.setName(brand.getName());
+			for (Image image : image_brand) {
+				ImageDTO imageDTO_brand = new ImageDTO();
+				String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/images/").path(image.getId() + "")
+						.toUriString();
+				imageDTO_brand.setId(image.getId());
+				imageDTO_brand.setUrl(url);
+				imageDTO_brand.setType(image.getType());
+				imageDTOs_brand.add(imageDTO_brand);
+			}
+			brandDTO.setImageDTOs(imageDTOs_brand);
+			brandDTO.setId(brand.getId());
+			brandDTO.setFounderYear(brand.getFounderYear());
+			brandDTO.setDescription(brand.getDescription());
+			brandDTO.setCountry(brand.getCountry());
+			productDTO.setBrandDTO(brandDTO);
+			
 			List<ImageDTO> imageDTOs = new ArrayList<ImageDTO>();
 			for (Image image : images) {
 				ImageDTO imageDTO = new ImageDTO();

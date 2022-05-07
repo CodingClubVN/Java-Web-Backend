@@ -36,11 +36,11 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	@Transactional
-	public boolean createUser(User user) {
+	public User createUser(User user) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		session.persist(user);
-		return true;
+		return user;
 	}
 	@Override
 	@Transactional

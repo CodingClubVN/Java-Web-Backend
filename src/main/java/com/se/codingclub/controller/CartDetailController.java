@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.se.codingclub.dto.Auth;
 import com.se.codingclub.dto.BrandDTO;
 import com.se.codingclub.dto.CartDetailDTO;
 import com.se.codingclub.dto.CategoryDTO;
@@ -28,8 +29,12 @@ import com.se.codingclub.dto.ShoppingSessionDTO;
 import com.se.codingclub.entity.CartDetail;
 import com.se.codingclub.entity.Image;
 import com.se.codingclub.entity.Product;
+import com.se.codingclub.entity.ShoppingSession;
+import com.se.codingclub.entity.User;
+import com.se.codingclub.service.AuthService;
 import com.se.codingclub.service.CartDetailService;
 import com.se.codingclub.service.ProductService;
+import com.se.codingclub.service.ShoppingSessionService;
 
 @CrossOrigin
 @RestController
@@ -40,19 +45,30 @@ public class CartDetailController {
 	private CartDetailService cartDetailService;
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private Auth tokenWarp;
+	@Autowired
+	private ShoppingSessionService shoppingSessionService;
+	@Autowired
+	private AuthService authService;
 
 	@PostMapping("/new")
-	public CartDetailDTO saveCartDetail(@RequestBody CartDetail cartDetail) {
+	public Object saveCartDetail(@RequestBody CartDetail cartDetail) {
 
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
+		User user = authService.getUserByToken(token);
+		ShoppingSession shoppingSession = shoppingSessionService.getShoppingSessionByUserId(user.getId());
 		CartDetailDTO cartDetailDTO = new CartDetailDTO();
-
+		cartDetail.setShoppingSession(shoppingSession);
 		CartDetail cartDetail2 = cartDetailService.saveCartDetail(cartDetail);
-
 		ShoppingSessionDTO shoppingSessionDTO = new ShoppingSessionDTO();
 		shoppingSessionDTO.setId(cartDetail2.getShoppingSession().getId());
 		shoppingSessionDTO.setModifiedDate(cartDetail2.getShoppingSession().getModifiedDate());
 		shoppingSessionDTO.setCreatedDate(cartDetail2.getShoppingSession().getCreatedDate());
-
 		ProductDTO productDTO = new ProductDTO();
 		Map<Product, List<Image>> map = productService.getProductById(cartDetail2.getProduct().getId());
 		map.entrySet().forEach(entry -> {
@@ -143,6 +159,11 @@ public class CartDetailController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ResponeMessage> deleteCartDetail(@PathVariable String id) {
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
 		try {
 			cartDetailService.deleteCartDetail(Integer.parseInt(id));
 			return ResponseEntity.ok().body(new ResponeMessage("Delete Success!"));
@@ -153,9 +174,16 @@ public class CartDetailController {
 	}
 
 	@GetMapping
-	public List<CartDetailDTO> getListCartDetail(@RequestParam(required = true) String shopping_session) {
+	public Object getListCartDetail() {
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
+		User user = authService.getUserByToken(token);
+		ShoppingSession shoppingSession = shoppingSessionService.getShoppingSessionByUserId(user.getId());
 		List<CartDetail> cartDetails = cartDetailService
-				.getListCartDetailBySessionId(Integer.parseInt(shopping_session));
+				.getListCartDetailBySessionId(shoppingSession.getId());
 		List<CartDetailDTO> detailDTOs = new ArrayList<CartDetailDTO>();
 		for (CartDetail cartDetail2 : cartDetails) {
 			CartDetailDTO cartDetailDTO = new CartDetailDTO();

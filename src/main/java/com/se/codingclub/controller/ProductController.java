@@ -137,4 +137,40 @@ public class ProductController {
 		return productDTO;
 	}
 
+	@GetMapping("/brand/{brand_id}")
+	public Object getProductByBrand(@PathVariable String brand_id) {
+		Map<Product, List<Image>> map = productService.getListProductByBrand(Integer.parseInt(brand_id));
+		List<ProductDTO> productDTOs = new ArrayList<ProductDTO>();
+
+		map.entrySet().forEach(product -> {
+			Product productTemp = product.getKey();
+			List<Image> images = product.getValue();
+			ProductDTO productDTO = new ProductDTO();
+			productDTO.setUpdatedDate(productTemp.getUpdatedDate());
+			productDTO.setPrice(productTemp.getPrice());
+			productDTO.setName(productTemp.getName());
+			productDTO.setId(productTemp.getId());
+			productDTO.setFuelType(productTemp.getFuelType());
+			productDTO.setCreatedDate(productTemp.getCreatedDate());
+			productDTO.setBodyType(productTemp.getBodyType());
+			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getId(), productTemp.getCategory().getName(),
+					productTemp.getCategory().getDescription()));
+			productDTO.setBrandDTO(new BrandDTO(productTemp.getBrand().getId(), productTemp.getBrand().getName(),
+					productTemp.getBrand().getCountry(), productTemp.getBrand().getFounderYear(),
+					productTemp.getBrand().getDescription()));
+			List<ImageDTO> imageDTOs = new ArrayList<ImageDTO>();
+			for (Image image : images) {
+				ImageDTO imageDTO = new ImageDTO();
+				String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/images/")
+						.path(image.getId() + "").toUriString();
+				imageDTO.setId(image.getId());
+				imageDTO.setUrl(url);
+				imageDTO.setType(image.getType());
+				imageDTOs.add(imageDTO);
+			}
+			productDTO.setImageDTOs(imageDTOs);
+			productDTOs.add(productDTO);
+		});
+		return ResponseEntity.status(200).body(productDTOs);
+	}
 }

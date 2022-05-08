@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Query;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,6 +135,16 @@ public class ProductDAOImpl implements ProductDAO {
 			result.put(product, listImage);
 		}
 		return result;
+	}
+
+	@Override
+	@Transactional
+	public void updateStatusProductByBrand(int brand_id) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		String sql = "update products set status = 'disabled' where brand_id = " +brand_id;
+		Query query = session.createNativeQuery(sql);
+	    query.executeUpdate();
 	}
 
 }

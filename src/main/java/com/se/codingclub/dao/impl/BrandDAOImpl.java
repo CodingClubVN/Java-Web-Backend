@@ -27,7 +27,7 @@ public class BrandDAOImpl implements BrandDAO {
 		Map<Brand, List<Image>> result = new HashMap<>();
 		List<Brand> listBrands = new ArrayList<Brand>();
 		Session session = sessionFactory.getCurrentSession();
-		String query = "Select * from brands";
+		String query = "Select * from brands where status='enable'";
 		String queryImage = "Select * from images where brand_id = ";
 		listBrands = session.createNativeQuery(query, Brand.class).getResultList();
 		for (Brand brand : listBrands) {
@@ -60,6 +60,7 @@ public class BrandDAOImpl implements BrandDAO {
 	@Transactional
 	public Brand saveBrand(Brand brand) {
 		Session session = sessionFactory.getCurrentSession();
+		brand.setStatus("enable");
 		session.persist(brand);
 		return brand;
 	}
@@ -77,6 +78,9 @@ public class BrandDAOImpl implements BrandDAO {
 			brandOld.setDescription(brand.getDescription());
 		if (brand.getCountry() != null)
 			brandOld.setCountry(brand.getCountry());
+		if (brand.getStatus() != null) {
+			brandOld.setStatus(brand.getStatus());
+		}
 		session.merge(brandOld);
 		return brandOld;
 	}

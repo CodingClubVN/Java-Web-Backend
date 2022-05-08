@@ -64,4 +64,10 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.getListProductByCategory(category_id);
 	}
 
+	@Override
+	public void updateStatusbyBrand(int brand_id) {
+		// TODO Auto-generated method stub
+		productDAO.updateStatusProductByBrand(brand_id);
+	}
+
 }

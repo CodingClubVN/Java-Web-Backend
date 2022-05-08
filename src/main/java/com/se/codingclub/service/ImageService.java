@@ -18,4 +18,5 @@ public interface ImageService {
 	public void deleteImage(int id);
 
 	public Image getImageById(int id);
+	public ImageDTO updateImage(int image_id, MultipartFile file);
 }

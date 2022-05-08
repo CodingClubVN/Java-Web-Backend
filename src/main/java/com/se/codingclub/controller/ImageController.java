@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -85,7 +86,6 @@ public class ImageController {
 		}
 		return imageService.saveImage(productId, brandId, type, file);
 	}
-
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ResponeMessage> deleteImage(@PathVariable String id) {
 		String token  = tokenWarp.getToken();
@@ -105,5 +105,18 @@ public class ImageController {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Could not Delete"));
 		}
+	}
+	@PostMapping("/update/{id}")
+	public Object updateImage(@RequestParam("file") MultipartFile file, @PathVariable String id) throws IOException {
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
+		User user = authService.getUserByToken(token);
+		if(user.getRole().equals("admin") == false) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Account does not have permission to perform this function!"));
+		}
+		return imageService.updateImage(Integer.parseInt(id), file);
 	}
 }

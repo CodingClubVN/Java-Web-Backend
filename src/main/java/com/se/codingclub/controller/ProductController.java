@@ -125,7 +125,6 @@ public class ProductController {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Account does not have permission to perform this function!"));
 		}
 		try {
-
 			Product product = new Product();
 			product.setStatus("disabled");
 			productService.updateProdcut(Integer.parseInt(id), product);

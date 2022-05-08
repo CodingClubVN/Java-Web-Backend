@@ -53,16 +53,26 @@ public class ImageDAOImpl implements ImageDAO {
 	public void deleteImage(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		Image image = session.find(Image.class, id);
-
 		session.delete(image);
 	}
-
 	@Override
 	@Transactional
 	public Image getImageById(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		Image image = session.find(Image.class, id);
 		return image;
+	}
+
+	@Override
+	@Transactional
+	public Image updateImage(int image_id,Image image) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Image imageOld = session.find(Image.class, image_id);
+		imageOld.setFile(image.getFile());
+		imageOld.setFileType(image.getFileType());
+		session.merge(imageOld);
+		return imageOld;
 	}
 
 }

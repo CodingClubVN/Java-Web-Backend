@@ -15,5 +15,7 @@ public interface ImageDAO {
 	public void deleteImage(int id);
 
 	public Image getImageById(int id);
+	
+	public Image updateImage(int image_id,Image image);
 
 }

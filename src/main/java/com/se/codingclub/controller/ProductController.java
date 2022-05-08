@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import org.dom4j.Branch;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +66,6 @@ public class ProductController {
 			map = productService.getListProduct();
 		}
 		List<ProductDTO> productDTOs = new ArrayList<ProductDTO>();
-
 		map.entrySet().forEach(product -> {
 			Product productTemp = product.getKey();
 			List<Image> images = product.getValue();
@@ -108,6 +109,7 @@ public class ProductController {
 		if(user.getRole().equals("admin") == false) {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Account does not have permission to perform this function!"));
 		}
+		product.setStatus("enable");
 		return productService.saveProdcut(product);
 	}
 
@@ -124,7 +126,9 @@ public class ProductController {
 		}
 		try {
 
-			productService.deleteProduct(Integer.parseInt(id));
+			Product product = new Product();
+			product.setStatus("disabled");
+			productService.updateProdcut(Integer.parseInt(id), product);
 			return ResponseEntity.ok().body(new ResponeMessage("Delete Success"));
 		} catch (Exception e) {
 

@@ -33,6 +33,8 @@ public class Product {
 	private Date createdDate;
 	@Column(name = "update_date")
 	private Date updatedDate;
+	@Column(name= "status")
+	private String status;
 
 	@ManyToOne
 	@JoinColumn(name = "category_id")
@@ -136,4 +138,13 @@ public class Product {
 		this.discount = discount;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	
 }

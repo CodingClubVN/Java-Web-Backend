@@ -25,7 +25,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@Transactional
 	public Map<Product, List<Image>> getListProduct() {
 		Map<Product, List<Image>> result = new HashMap<>();
-		String query = "Select * from products";
+		String query = "Select * from products where status='enable' ORDER BY id desc";
 		String queryImage = "Select * from images where product_id = ";
 		Session session = sessionFactory.getCurrentSession();
 		List<Product> products = session.createNativeQuery(query, Product.class).getResultList();
@@ -86,6 +86,9 @@ public class ProductDAOImpl implements ProductDAO {
 			productOld.setName(product.getName());
 		if (product.getPrice() != 0)
 			productOld.setPrice(product.getPrice());
+		if (product.getStatus() != null) {
+			productOld.setStatus(product.getStatus());
+		}
 		productOld.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
 		session.merge(productOld);
 		return productOld;
@@ -103,7 +106,7 @@ public class ProductDAOImpl implements ProductDAO {
 	public Map<Product, List<Image>> getListProductByBrand(int brand_id) {
 		// TODO Auto-generated method stub
 		Map<Product, List<Image>> result = new HashMap<>();
-		String query = "Select * from products where brand_id = "+ brand_id;
+		String query = "Select * from products where brand_id = "+ brand_id+" and status='enable' ORDER BY id desc";
 		String queryImage = "Select * from images where product_id = ";
 		Session session = sessionFactory.getCurrentSession();
 		List<Product> products = session.createNativeQuery(query, Product.class).getResultList();
@@ -120,7 +123,7 @@ public class ProductDAOImpl implements ProductDAO {
 	public Map<Product, List<Image>> getListProductByCategory(int category_id) {
 		// TODO Auto-generated method stub
 		Map<Product, List<Image>> result = new HashMap<>();
-		String query = "Select * from products where category_id = "+ category_id;
+		String query = "Select * from products where category_id = "+ category_id + " and status='enable' ORDER BY id desc";
 		String queryImage = "Select * from images where product_id = ";
 		Session session = sessionFactory.getCurrentSession();
 		List<Product> products = session.createNativeQuery(query, Product.class).getResultList();

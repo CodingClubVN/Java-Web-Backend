@@ -15,4 +15,5 @@ public interface CartDetailService {
 
 	public CartDetail updateCartDetail(int id, CartDetail cartDetail);
 
+	public CartDetail getCartDetailByProductId(int product_id, int cart_id);
 }

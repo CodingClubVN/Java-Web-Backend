@@ -55,6 +55,7 @@ public class CartDetailController {
 	@PostMapping("/new")
 	public Object saveCartDetail(@RequestBody CartDetail cartDetail) {
 
+		CartDetail cartDetail2;
 		String token  = tokenWarp.getToken();
 		if (token == null) {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
@@ -62,9 +63,18 @@ public class CartDetailController {
 		}
 		User user = authService.getUserByToken(token);
 		ShoppingSession shoppingSession = shoppingSessionService.getShoppingSessionByUserId(user.getId());
+		CartDetail cart_check = cartDetailService.getCartDetailByProductId(cartDetail.getProduct().getId(),shoppingSession.getId());
+		if(cart_check !=null) {
+			int quantity = cart_check.getQuantity() + cartDetail.getQuantity();
+			cart_check.setQuantity(quantity);
+			CartDetail cartDetail1 = cartDetailService.updateCartDetail(cart_check.getId(), cart_check);
+			cartDetail2 = cartDetail1;
+		}else {
+			cartDetail.setShoppingSession(shoppingSession);
+			CartDetail cartDetail11 = cartDetailService.saveCartDetail(cartDetail);
+			cartDetail2 = cartDetail11;
+		}
 		CartDetailDTO cartDetailDTO = new CartDetailDTO();
-		cartDetail.setShoppingSession(shoppingSession);
-		CartDetail cartDetail2 = cartDetailService.saveCartDetail(cartDetail);
 		ShoppingSessionDTO shoppingSessionDTO = new ShoppingSessionDTO();
 		shoppingSessionDTO.setId(cartDetail2.getShoppingSession().getId());
 		shoppingSessionDTO.setModifiedDate(cartDetail2.getShoppingSession().getModifiedDate());
@@ -81,7 +91,7 @@ public class CartDetailController {
 			productDTO.setFuelType(productTemp.getFuelType());
 			productDTO.setCreatedDate(productTemp.getCreatedDate());
 			productDTO.setBodyType(productTemp.getBodyType());
-			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getId(), productTemp.getCategory().getName(),
+			productDTO.setCategoryDTO(new CategoryDTO(productTemp.getCategory().getId(), productTemp.getCategory().getName(),
 					productTemp.getCategory().getDescription()));
 			productDTO.setBrandDTO(new BrandDTO(productTemp.getBrand().getId(), productTemp.getBrand().getName(),
 					productTemp.getBrand().getCountry(), productTemp.getBrand().getFounderYear(),

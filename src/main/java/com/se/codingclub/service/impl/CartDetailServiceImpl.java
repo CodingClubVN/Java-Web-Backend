@@ -46,4 +46,10 @@ public class CartDetailServiceImpl implements CartDetailService {
 		return carDetailDAO.updateCartDetail(id, cartDetail);
 	}
 
+	@Override
+	public CartDetail getCartDetailByProductId(int product_id, int cart_id) {
+		// TODO Auto-generated method stub
+		return  carDetailDAO.getCartDetailByProductId(product_id, cart_id);
+	}
+
 }

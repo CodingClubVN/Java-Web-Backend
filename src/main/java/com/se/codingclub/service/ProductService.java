@@ -14,5 +14,7 @@ public interface ProductService {
 	public void deleteProduct(int id);
 	public Product updateProdcut(int id, Product product);
 	public Product getById(int id);
-	
+	public Map<Product, List<Image>> getListProductByBrand(int brand_id);
+	public Map<Product, List<Image>> getListproductByCategory(int category_id);
+	public void updateStatusbyBrand(int brand_id);
 }

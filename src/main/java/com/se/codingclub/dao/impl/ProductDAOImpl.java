@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Query;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@Transactional
 	public Map<Product, List<Image>> getListProduct() {
 		Map<Product, List<Image>> result = new HashMap<>();
-		String query = "Select * from products";
+		String query = "Select * from products where status='enable' ORDER BY id desc";
 		String queryImage = "Select * from images where product_id = ";
 		Session session = sessionFactory.getCurrentSession();
 		List<Product> products = session.createNativeQuery(query, Product.class).getResultList();
@@ -86,6 +88,9 @@ public class ProductDAOImpl implements ProductDAO {
 			productOld.setName(product.getName());
 		if (product.getPrice() != 0)
 			productOld.setPrice(product.getPrice());
+		if (product.getStatus() != null) {
+			productOld.setStatus(product.getStatus());
+		}
 		productOld.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
 		session.merge(productOld);
 		return productOld;
@@ -96,6 +101,50 @@ public class ProductDAOImpl implements ProductDAO {
 	public Product getById(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.find(Product.class, id);
+	}
+
+	@Override
+	@Transactional
+	public Map<Product, List<Image>> getListProductByBrand(int brand_id) {
+		// TODO Auto-generated method stub
+		Map<Product, List<Image>> result = new HashMap<>();
+		String query = "Select * from products where brand_id = "+ brand_id+" and status='enable' ORDER BY id desc";
+		String queryImage = "Select * from images where product_id = ";
+		Session session = sessionFactory.getCurrentSession();
+		List<Product> products = session.createNativeQuery(query, Product.class).getResultList();
+		for (Product product : products) {
+			List<Image> listImage = session.createNativeQuery(queryImage + product.getId(), Image.class)
+					.getResultList();
+			result.put(product, listImage);
+		}
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public Map<Product, List<Image>> getListProductByCategory(int category_id) {
+		// TODO Auto-generated method stub
+		Map<Product, List<Image>> result = new HashMap<>();
+		String query = "Select * from products where category_id = "+ category_id + " and status='enable' ORDER BY id desc";
+		String queryImage = "Select * from images where product_id = ";
+		Session session = sessionFactory.getCurrentSession();
+		List<Product> products = session.createNativeQuery(query, Product.class).getResultList();
+		for (Product product : products) {
+			List<Image> listImage = session.createNativeQuery(queryImage + product.getId(), Image.class)
+					.getResultList();
+			result.put(product, listImage);
+		}
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public void updateStatusProductByBrand(int brand_id) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		String sql = "update products set status = 'disabled' where brand_id = " +brand_id;
+		Query query = session.createNativeQuery(sql);
+	    query.executeUpdate();
 	}
 
 }

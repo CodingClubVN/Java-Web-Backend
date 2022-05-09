@@ -18,13 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.se.codingclub.dto.Auth;
 import com.se.codingclub.dto.BrandDTO;
 import com.se.codingclub.dto.ImageDTO;
 import com.se.codingclub.dto.ResponeMessage;
 import com.se.codingclub.entity.Brand;
 import com.se.codingclub.entity.Image;
+import com.se.codingclub.entity.User;
+import com.se.codingclub.service.AuthService;
 import com.se.codingclub.service.BrandService;
 import com.se.codingclub.service.ImageService;
+import com.se.codingclub.service.ProductService;
 
 @CrossOrigin
 @RestController
@@ -35,7 +39,12 @@ public class BrandController {
 	private BrandService brandService;
 	@Autowired
 	private ImageService imageService;
-
+	@Autowired
+	private Auth tokenWarp;
+	@Autowired
+	private AuthService authService;
+	@Autowired
+	private ProductService productService;
 	@GetMapping("/list")
 	public ResponseEntity<List<BrandDTO>> getBrands() {
 		Map<Brand, List<Image>> map = brandService.getListBrand();
@@ -93,16 +102,37 @@ public class BrandController {
 	}
 
 	@PostMapping("/new")
-	public Brand saveBrand(@RequestBody Brand brand) {
-
+	public Object saveBrand(@RequestBody Brand brand) {
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
+		User user = authService.getUserByToken(token);
+		if(user.getRole().equals("admin") == false) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Account does not have permission to perform this function!"));
+		}
 		return brandService.saveBrand(brand);
 
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ResponeMessage> deleteBrand(@PathVariable String id) {
+		String token  = tokenWarp.getToken();
+		if (token == null) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Please login to continue!"));
+		}
+		User user = authService.getUserByToken(token);
+		if(user.getRole().equals("admin") == false) {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("Account does not have permission to perform this function!"));
+		}
 		try {
-			brandService.deleteBrand(Integer.parseInt(id));
+//			brandService.deleteBrand(Integer.parseInt(id));
+			Brand brand = new Brand();
+			brand.setStatus("disabled");
+			brandService.updateBrand(Integer.parseInt(id), brand);
+			productService.updateStatusbyBrand(Integer.parseInt(id));
 			return ResponseEntity.ok().body(new ResponeMessage("Delete Success"));
 		} catch (Exception e) {
 			// TODO: handle exception

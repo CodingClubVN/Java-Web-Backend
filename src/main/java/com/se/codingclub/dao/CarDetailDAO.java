@@ -15,4 +15,6 @@ public interface CarDetailDAO {
 	public CartDetail getCartDetailById(int id);
 
 	public CartDetail updateCartDetail(int id, CartDetail cartDetail);
+	
+	public CartDetail getCartDetailByProductId(int product_id, int cart_id);
 }

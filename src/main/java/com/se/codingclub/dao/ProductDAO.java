@@ -14,4 +14,7 @@ public interface ProductDAO {
 	public void deleteProduct(int id);
 	public Product updateProdcut(int id, Product product);
 	public Product getById(int id);
+	public Map<Product, List<Image>> getListProductByBrand(int brand_id);
+	public Map<Product, List<Image>> getListProductByCategory(int category_id);
+	public void updateStatusProductByBrand(int brand_id);
 }

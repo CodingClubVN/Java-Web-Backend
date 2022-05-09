@@ -83,4 +83,29 @@ public class ImageServiceImpl implements ImageService {
 		return imageDTO;
 	}
 
+	@Override
+	public ImageDTO updateImage(int image_id, MultipartFile file) {
+		// TODO Auto-generated method stub
+		try {
+			System.out.println("aaaaa");
+			Image image = new Image();
+			image.setFile(file.getBytes());
+			String typeFile = StringUtils.cleanPath(file.getOriginalFilename());
+			image.setFileType(typeFile);
+			image.setId(image_id);
+			image = imageDAO.updateImage(image_id, image);
+			ImageDTO imageDTO = new ImageDTO();
+			imageDTO.setId(image.getId());
+			imageDTO.setType(image.getType());
+			String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/").path(image.getId() + "")
+					.toUriString();
+			imageDTO.setUrl(url);
+			return imageDTO;
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

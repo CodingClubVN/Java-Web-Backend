@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.se.codingclub.dto.ResponeMessage;
 import com.se.codingclub.dto.Auth;
 import com.se.codingclub.dto.ChangePassword;
+import com.se.codingclub.entity.ShoppingSession;
 import com.se.codingclub.entity.User;
 import com.se.codingclub.service.AuthService;
+import com.se.codingclub.service.ShoppingSessionService;
 import com.se.codingclub.service.UserService;
 
 @CrossOrigin
@@ -30,6 +32,8 @@ public class AuthController {
 	private AuthService authService;
 	@Autowired
 	private Auth tokenWrapper;
+	@Autowired
+	private ShoppingSessionService shoppingSessionService;
 
 	@PostMapping("/login")
 	public Object loginUser(@RequestBody User user) {
@@ -57,8 +61,12 @@ public class AuthController {
 		Date created_at = new Date();
 		String hashPassword = authService.encode(user.getPassword());
 		User newUser = new User(user.getUserName(), hashPassword, created_at, created_at);
+		newUser.setRole("customer");
 		try {
-			userService.createUser(newUser);
+			User userNew = userService.createUser(newUser);
+			ShoppingSession shoppingSession = new ShoppingSession();
+			shoppingSession.setUser(userNew);
+			shoppingSessionService.saveShoppingSession(shoppingSession);
 			return ResponseEntity.status(200).body(new ResponeMessage("Create user success!"));
 		} catch (Exception e) {
 			// TODO: handle exception

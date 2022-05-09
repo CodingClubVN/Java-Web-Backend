@@ -76,4 +76,18 @@ public class CartDetailDAOImpl implements CarDetailDAO {
 		return cartDetailOld;
 	}
 
+	@Override
+	@Transactional
+	public CartDetail getCartDetailByProductId(int product_id, int cart_id) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		String query = "Select * from cart_detail where product_id=" + product_id + " and session_id = "+ cart_id;
+		List<CartDetail> cartDetails = session.createNativeQuery(query, CartDetail.class).getResultList();
+		if(cartDetails.size()>0) {
+			return cartDetails.get(0);
+		}else {
+			return null;
+		}
+	}
+
 }

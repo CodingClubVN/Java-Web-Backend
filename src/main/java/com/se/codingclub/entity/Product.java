@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "products")
@@ -21,24 +23,33 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Pattern(regexp = "^[a-zA-Z0-9]{4,30}$", message = "At least 4 chars/digits and can't more than 30 chars/digits")
 	@Column(name = "name")
 	private String name;
+
+	@NotNull
 	@Column(name = "price")
 	private double price;
+	@NotNull
 	@Column(name = "fuel_type")
 	private String fuelType;
+	@NotNull
 	@Column(name = "body_type")
 	private String bodyType;
 	@Column(name = "created_date")
 	private Date createdDate;
 	@Column(name = "update_date")
 	private Date updatedDate;
-	@Column(name= "status")
+	@NotNull
+	@Column(name = "status")
 	private String status;
-
+	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
+	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "brand_id")
 	private Brand brand;
@@ -146,5 +157,4 @@ public class Product {
 		this.status = status;
 	}
 
-	
 }

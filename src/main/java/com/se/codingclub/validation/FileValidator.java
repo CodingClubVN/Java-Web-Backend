@@ -26,6 +26,6 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 	}
 
 	private boolean isSupportedContentType(String contentType) {
-		return contentType.equals("audio/mpeg");
+		return contentType.equals("image/jpeg");
 	}
 }

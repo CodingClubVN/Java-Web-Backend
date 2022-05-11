@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -76,7 +75,7 @@ public class ImageController {
 	}
 
 	@PostMapping("/new")
-	public Object saveImage(@RequestParam("file") @Valid @ValidFile MultipartFile file, @RequestParam("productId") @NotEmpty String productId,
+	public Object saveImage(@RequestParam("file") @Valid @ValidFile MultipartFile file, @RequestParam("productId") String productId,
 			@RequestParam("brandId") String brandId, @RequestParam("type") String type) throws IOException {
 
 		String token  = tokenWarp.getToken();

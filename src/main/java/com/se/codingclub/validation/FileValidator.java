@@ -26,6 +26,10 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 	}
 
 	private boolean isSupportedContentType(String contentType) {
-		return contentType.equals("image/jpeg");
+		if(contentType.equals("image/jpeg") || contentType.equals("image/png")) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 }

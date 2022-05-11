@@ -2,9 +2,12 @@ package com.se.codingclub.controller;
 
 import java.util.Date;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,24 +39,29 @@ public class AuthController {
 	private ShoppingSessionService shoppingSessionService;
 
 	@PostMapping("/login")
-	public Object loginUser(@RequestBody User user) {
-		User userCheck = userService.getUserByUsername(user.getUserName());
-		if (userCheck == null) {
-			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("username not exists"));
-		} else {
-			if (authService.matches(user.getPassword(), userCheck.getPassword()) == true) {
-				String token = authService.generateTokenLogin(user.getUserName(), userCheck.getRole(),
-						userCheck.getId());
-				return ResponseEntity.status(200).body(new Auth(token, userCheck.getRole()));
+	public Object loginUser(@Valid @RequestBody User user, Errors errors) {
+		if(!errors.hasErrors()) {
+			User userCheck = userService.getUserByUsername(user.getUserName());
+			if (userCheck == null) {
+				return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("username not exists"));
 			} else {
-				return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
-						.body(new ResponeMessage("Incorrect password"));
+				if (authService.matches(user.getPassword(), userCheck.getPassword()) == true) {
+					String token = authService.generateTokenLogin(user.getUserName(), userCheck.getRole(),
+							userCheck.getId());
+					return ResponseEntity.status(200).body(new Auth(token, userCheck.getRole()));
+				} else {
+					return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+							.body(new ResponeMessage("Incorrect password"));
+				}
 			}
+		}else {
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+					.body(new ResponeMessage("Username and password is wrong!"));
 		}
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<ResponeMessage> registerUser(@RequestBody User user) {
+	public ResponseEntity<ResponeMessage> registerUser(@Valid @RequestBody User user) {
 		User userCheck = userService.getUserByUsername(user.getUserName());
 		if (userCheck != null) {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("username exists"));

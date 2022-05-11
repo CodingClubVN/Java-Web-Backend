@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "users")
@@ -18,10 +19,14 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Pattern(regexp = "^[a-zA-Z0-9]{4,30}$",message = "At least 4 chars/digits and can't more than 30 chars/digits")
 	@Column(name = "username")
 	private String userName;
+	
+	@Pattern(regexp = "^[a-zA-Z0-9]{6,20}$",message = "At least 6 chars/digits and can't more than 20 chars/digits")
 	@Column(name = "password")
 	private String password;
+	
 	@Column(name = "first_name")
 	private String firstName;
 	@Column(name = "last_name")

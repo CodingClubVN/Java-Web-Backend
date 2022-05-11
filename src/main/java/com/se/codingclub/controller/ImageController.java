@@ -110,7 +110,7 @@ public class ImageController {
 		}
 	}
 	@PostMapping("/update/{id}")
-	public Object updateImage(@RequestParam("file") MultipartFile file, @PathVariable String id) throws IOException {
+	public Object updateImage(@RequestParam("file") @Valid @ValidFile MultipartFile file, @PathVariable String id) throws IOException {
 		String token  = tokenWarp.getToken();
 		if (token == null) {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)

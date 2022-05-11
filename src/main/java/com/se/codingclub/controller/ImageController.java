@@ -4,31 +4,35 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.se.codingclub.dto.Auth;
-import com.se.codingclub.dto.ImageDTO;
 import com.se.codingclub.dto.ResponeMessage;
 import com.se.codingclub.entity.Image;
 import com.se.codingclub.entity.User;
 import com.se.codingclub.service.AuthService;
 import com.se.codingclub.service.ImageService;
+import com.se.codingclub.validation.ValidFile;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/images")
+@Validated
 public class ImageController {
 
 	@Autowired
@@ -72,7 +76,7 @@ public class ImageController {
 	}
 
 	@PostMapping("/new")
-	public Object saveImage(@RequestParam("file") MultipartFile file, @RequestParam("productId") String productId,
+	public Object saveImage(@RequestParam("file") @Valid @ValidFile MultipartFile file, @RequestParam("productId") @NotEmpty String productId,
 			@RequestParam("brandId") String brandId, @RequestParam("type") String type) throws IOException {
 
 		String token  = tokenWarp.getToken();

@@ -61,7 +61,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<ResponeMessage> registerUser(@Valid @RequestBody User user) {
+	public ResponseEntity<ResponeMessage> registerUser(@Valid @RequestBody User user,Errors errors) {
 		User userCheck = userService.getUserByUsername(user.getUserName());
 		if (userCheck != null) {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponeMessage("username exists"));

@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -22,8 +23,7 @@ public class User {
 	@Pattern(regexp = "^[a-zA-Z0-9]{4,30}$",message = "At least 4 chars/digits and can't more than 30 chars/digits")
 	@Column(name = "username")
 	private String userName;
-	
-	@Pattern(regexp = "^[a-zA-Z0-9]{6,20}$",message = "At least 6 chars/digits and can't more than 20 chars/digits")
+	@NotNull
 	@Column(name = "password")
 	private String password;
 	

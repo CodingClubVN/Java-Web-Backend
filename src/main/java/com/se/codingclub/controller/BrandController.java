@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +36,7 @@ import com.se.codingclub.service.ProductService;
 
 @CrossOrigin
 @RestController
+@Validated
 @RequestMapping("/api/brands")
 public class BrandController {
 
@@ -102,7 +107,7 @@ public class BrandController {
 	}
 
 	@PostMapping("/new")
-	public Object saveBrand(@RequestBody Brand brand) {
+	public Object saveBrand(@Valid @RequestBody Brand brand,Errors errors) {
 		String token  = tokenWarp.getToken();
 		if (token == null) {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
